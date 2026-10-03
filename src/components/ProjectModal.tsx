@@ -198,7 +198,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               rel="noopener noreferrer"
               className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-charcoal-950 hover:bg-jade-700 text-ivory-50 text-sm sm:text-base font-extrabold tracking-wide transition-all shadow-md group"
             >
-              <span>在新标签页打开独立 Demo</span>
+              <span>立即打开真实 App ({project.demoUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')})</span>
               <ExternalLink className="w-4 h-4 text-neon-green" />
             </a>
           </div>
