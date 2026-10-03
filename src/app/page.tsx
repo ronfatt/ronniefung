@@ -1,101 +1,83 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState } from "react";
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { TeacherSelector } from "@/components/TeacherSelector";
+import { WhoIAm } from "@/components/WhoIAm";
+import { Timeline } from "@/components/Timeline";
+import { ProjectShowcase } from "@/components/ProjectShowcase";
+import { MethodFlow } from "@/components/MethodFlow";
+import { BigStatement } from "@/components/BigStatement";
+import { TargetPartners } from "@/components/TargetPartners";
+import { PossibleProducts } from "@/components/PossibleProducts";
+import { PersonalPhilosophy } from "@/components/PersonalPhilosophy";
+import { ClosingCTA } from "@/components/ClosingCTA";
+import { ContactModal } from "@/components/ContactModal";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState<string>("传统经验系统化与 AI 产品定制");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  const handleOpenContactWithTopic = (topic: string) => {
+    setSelectedTopic(topic);
+    setContactModalOpen(true);
+  };
+
+  const handleScrollToProjects = () => {
+    const el = document.getElementById("projects");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-ivory-50 text-charcoal-900 selection:bg-jade-700 selection:text-ivory-50 relative">
+      {/* Top Floating Navigation */}
+      <Navbar onOpenContact={() => setContactModalOpen(true)} />
+
+      {/* SECTION 1: HERO */}
+      <Hero onOpenDemo={handleScrollToProjects} />
+
+      {/* SPECIAL INTERACTION: 你是哪一种老师？ */}
+      <TeacherSelector onSelectTeacherForChat={handleOpenContactWithTopic} />
+
+      {/* SECTION 2: WHO I AM (我到底是做什么的？) */}
+      <WhoIAm />
+
+      {/* SECTION 3: 30-YEAR JOURNEY TIMELINE */}
+      <Timeline />
+
+      {/* SECTION 4: 11 PROTOTYPES & WEB APPS SHOWCASE */}
+      <ProjectShowcase />
+
+      {/* SECTION 5: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT) */}
+      <MethodFlow />
+
+      {/* SECTION 6: BIG STATEMENT (Full-screen Dark Section) */}
+      <BigStatement />
+
+      {/* SECTION 7: TARGET PARTNERS (我正在找这样的老师合作) */}
+      <TargetPartners onPartnerSelect={handleOpenContactWithTopic} />
+
+      {/* SECTION 8: POSSIBLE PRODUCTS (我们可以一起做什么？) */}
+      <PossibleProducts />
+
+      {/* SECTION 9: PERSONAL PHILOSOPHY (我对玄学的看法) */}
+      <PersonalPhilosophy />
+
+      {/* SECTION 10: CLOSING & CALL TO ACTION */}
+      <ClosingCTA
+        onOpenContact={() => setContactModalOpen(true)}
+        onOpenDemo={handleScrollToProjects}
+      />
+
+      {/* Contact & Inquiry Modal */}
+      <ContactModal
+        isOpen={contactModalOpen}
+        onClose={() => setContactModalOpen(false)}
+        initialTopic={selectedTopic}
+      />
+    </main>
   );
 }

@@ -3,25 +3,103 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FAF9F5;
+  --foreground: #111413;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 17px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    html {
+      font-size: 18px;
+    }
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    line-height: 1.68;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #143D2C;
+    color: #00E599;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Modern digital grid */
+.bg-digital-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(20, 61, 44, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 61, 44, 0.05) 1px, transparent 1px);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.bg-digital-grid-dark {
+  background-size: 44px 44px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 229, 153, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 229, 153, 0.08) 1px, transparent 1px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF9F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B2BFB8;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #328B65;
+}
+
+/* Young, futuristic floating animations */
+@keyframes ambientGlow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1) translate(0px, 0px);
   }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.1) translate(20px, -15px);
+  }
+}
+
+.animate-ambient-glow {
+  animation: ambientGlow 10s ease-in-out infinite;
+}
+
+@keyframes pulseNeon {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 229, 153, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 229, 153, 0.5);
+  }
+}
+
+.animate-pulse-neon {
+  animation: pulseNeon 3s ease-in-out infinite;
 }
