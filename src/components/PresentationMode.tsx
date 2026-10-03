@@ -8,13 +8,20 @@ import {
   ChevronRight, 
   Maximize2, 
   Minimize2, 
-  ExternalLink
+  ExternalLink,
+  Layers,
+  Database,
+  Cpu,
+  Sparkles,
+  TrendingUp,
+  ShieldCheck
 } from "lucide-react";
 import { siteConfig } from "@/data/siteConfig";
 import { teacherTypes } from "@/data/teachers";
 import { timelineData } from "@/data/timeline";
 import { projectsData } from "@/data/projects";
 import { methodSteps } from "@/data/content";
+import { architectureBlueprint } from "@/data/architecture";
 
 interface PresentationModeProps {
   isOpen: boolean;
@@ -30,7 +37,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedTeacherId, setSelectedTeacherId] = useState("mingli");
 
-  const totalSlides = 9;
+  const totalSlides = 10;
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev < totalSlides - 1 ? prev + 1 : 0));
@@ -429,8 +436,75 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 5: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT。) */}
+        {/* SLIDE 5: FULL-LIFECYCLE PLATFORM ARCHITECTURE */}
         {currentSlide === 5 && (
+          <div className="max-w-6xl w-full space-y-6 animate-in fade-in zoom-in-95 duration-300">
+            <div className="text-center space-y-2">
+              <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase">
+                FULL-LIFECYCLE SYSTEM ARCHITECTURE
+              </span>
+              <h2 className="font-serif text-3xl sm:text-5xl font-black text-ivory-50 tracking-tight">
+                从零构想到平台上线，我为你做的完整工程体系
+              </h2>
+              <p className="text-xs sm:text-sm text-charcoal-400 max-w-2xl mx-auto">
+                这绝非“把资料丢给通用 ChatGPT”。真正具备商业壁垒的独立 AI 平台，需要跨越 6 大复杂工程层级：
+              </p>
+            </div>
+
+            {/* 6 Layers Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              {architectureBlueprint.map((layer, idx) => {
+                const icons = [Layers, Database, Cpu, Sparkles, TrendingUp, ShieldCheck];
+                const LayerIcon = icons[idx] || Layers;
+                return (
+                  <div 
+                    key={layer.step}
+                    className="p-4 sm:p-5 rounded-2xl bg-charcoal-900/90 border border-white/10 flex flex-col justify-between space-y-3 hover:border-neon-green transition-all"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs font-black text-neon-green bg-neon-green/10 border border-neon-green/30 px-2 py-0.5 rounded-full">
+                          LAYER {layer.step}
+                        </span>
+                        <span className="text-[10px] font-mono text-charcoal-400">
+                          {layer.badge}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <div className="p-1.5 rounded-lg bg-white/5 text-neon-green">
+                          <LayerIcon className="w-4 h-4" />
+                        </div>
+                        <h3 className="font-serif text-base sm:text-lg font-black text-ivory-50 truncate">
+                          {layer.phase}
+                        </h3>
+                      </div>
+
+                      <p className="text-xs text-charcoal-300 leading-snug">
+                        {layer.subtitle}
+                      </p>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 space-y-1">
+                      <span className="text-[10px] font-mono text-bronze-300 block uppercase truncate">
+                        交付：{layer.deliverable}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="p-4 rounded-2xl bg-neon-green/10 border border-neon-green/30 text-center">
+              <p className="font-serif text-base sm:text-lg font-black text-ivory-100">
+                “从老师经验逆向工程，到私有向量防幻觉、确定性算法排盘、全端体验与自动化变现全包落地。”
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* SLIDE 6: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT。) */}
+        {currentSlide === 6 && (
           <div className="max-w-6xl w-full space-y-8 animate-in fade-in zoom-in-95 duration-300">
             <div className="text-center space-y-2">
               <span className="text-xs font-mono font-black text-bronze-400 tracking-[0.25em] uppercase">
@@ -463,8 +537,8 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 6: MY PHILOSOPHY (未来真正有价值的，不是 AI 会不会算命。) */}
-        {currentSlide === 6 && (
+        {/* SLIDE 7: MY PHILOSOPHY (未来真正有价值的，不是 AI 会不会算命。) */}
+        {currentSlide === 7 && (
           <div className="max-w-5xl w-full space-y-10 text-center animate-in fade-in zoom-in-95 duration-300">
             <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase">
               PHILOSOPHICAL VISION
@@ -495,8 +569,8 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 7: LET'S WORK TOGETHER (我正在找这样的老师合作。) */}
-        {currentSlide === 7 && (
+        {/* SLIDE 8: LET'S WORK TOGETHER (我正在找这样的老师合作。) */}
+        {currentSlide === 8 && (
           <div className="max-w-5xl w-full space-y-8 animate-in fade-in zoom-in-95 duration-300">
             <div className="text-center space-y-2">
               <span className="text-xs font-mono font-black text-bronze-400 tracking-[0.25em] uppercase">
@@ -533,8 +607,8 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 8: CLOSING (如果你有一套做了 10-30 年的方法...) */}
-        {currentSlide === 8 && (
+        {/* SLIDE 9: CLOSING (如果你有一套做了 10-30 年的方法...) */}
+        {currentSlide === 9 && (
           <div className="max-w-4xl w-full text-center space-y-8 animate-in fade-in zoom-in-95 duration-300">
             <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase">
               CALL TO ACTION
