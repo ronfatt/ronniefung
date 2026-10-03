@@ -10,8 +10,6 @@ import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { MethodFlow } from "@/components/MethodFlow";
 import { BigStatement } from "@/components/BigStatement";
 import { TargetPartners } from "@/components/TargetPartners";
-import { PossibleProducts } from "@/components/PossibleProducts";
-import { PersonalPhilosophy } from "@/components/PersonalPhilosophy";
 import { ClosingCTA } from "@/components/ClosingCTA";
 import { ContactModal } from "@/components/ContactModal";
 
@@ -32,41 +30,35 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-ivory-50 text-charcoal-900 selection:bg-jade-700 selection:text-ivory-50 relative">
+    <main className="min-h-screen bg-[#FAF7F2] text-charcoal-900 selection:bg-jade-800 selection:text-white relative">
       {/* Top Floating Navigation */}
       <Navbar onOpenContact={() => setContactModalOpen(true)} />
 
       {/* SECTION 1: HERO */}
       <Hero onOpenDemo={handleScrollToProjects} />
 
-      {/* SPECIAL INTERACTION: 你是哪一种老师？ */}
+      {/* SECTION 2: SPECIAL INTERACTION (你是哪一种老师？) */}
       <TeacherSelector onSelectTeacherForChat={handleOpenContactWithTopic} />
 
-      {/* SECTION 2: WHO I AM (我到底是做什么的？) */}
+      {/* SECTION 3: ABOUT ME (我到底是做什么的？) */}
       <WhoIAm />
 
-      {/* SECTION 3: 30-YEAR JOURNEY TIMELINE */}
+      {/* SECTION 4: MY JOURNEY (这条路，我走了近 30 年。) */}
       <Timeline />
 
-      {/* SECTION 4: 11 PROTOTYPES & WEB APPS SHOWCASE */}
+      {/* SECTION 5: PROJECTS (我不是只谈概念。我已经开始把它们做出来。) */}
       <ProjectShowcase />
 
-      {/* SECTION 5: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT) */}
+      {/* SECTION 6: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT。) */}
       <MethodFlow />
 
-      {/* SECTION 6: BIG STATEMENT (Full-screen Dark Section) */}
+      {/* SECTION 7: MY PHILOSOPHY (未来真正有价值的，不是 AI 会不会算命。) */}
       <BigStatement />
 
-      {/* SECTION 7: TARGET PARTNERS (我正在找这样的老师合作) */}
+      {/* SECTION 8: LET'S WORK TOGETHER (我正在找这样的老师合作。) */}
       <TargetPartners onPartnerSelect={handleOpenContactWithTopic} />
 
-      {/* SECTION 8: POSSIBLE PRODUCTS (我们可以一起做什么？) */}
-      <PossibleProducts />
-
-      {/* SECTION 9: PERSONAL PHILOSOPHY (我对玄学的看法) */}
-      <PersonalPhilosophy />
-
-      {/* SECTION 10: CLOSING & CALL TO ACTION */}
+      {/* SECTION 9: FOOTER / CLOSING */}
       <ClosingCTA
         onOpenContact={() => setContactModalOpen(true)}
         onOpenDemo={handleScrollToProjects}
