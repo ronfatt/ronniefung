@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { 
   X, 
@@ -47,6 +47,12 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
   const [remoteModalOpen, setRemoteModalOpen] = useState(false);
   const [isPhoneConnected, setIsPhoneConnected] = useState(false);
   const [isBlackout, setIsBlackout] = useState(false);
+
+  // Virtual Laser Cursor & Pointer states
+  const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
+  const [cursorVisible, setCursorVisible] = useState<boolean>(false);
+  const [isLaserPing, setIsLaserPing] = useState<boolean>(false);
+  const cursorTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const totalSlides = 11;
 
@@ -103,7 +109,90 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
     }
   }, [isOpen, roomId, currentSlide, isBlackout, syncToPhone]);
 
-  // SSE subscription to receive commands from mobile phone clicker
+  // Handle all remote commands from phone (via WebRTC or SSE pubsub)
+  const handleRemoteAction = useCallback((payload: Record<string, unknown>) => {
+    if (!payload || !payload.action) return;
+
+    if (payload.action === "cursor") {
+      if (typeof payload.x === "number" && typeof payload.y === "number") {
+        setCursorPos({ x: payload.x, y: payload.y });
+        setCursorVisible(true);
+
+        if (cursorTimerRef.current) clearTimeout(cursorTimerRef.current);
+        cursorTimerRef.current = setTimeout(() => {
+          setCursorVisible(false);
+        }, 3000);
+      }
+    } else if (payload.action === "laser_ping") {
+      if (typeof payload.x === "number" && typeof payload.y === "number") {
+        setCursorPos({ x: payload.x, y: payload.y });
+      }
+      setCursorVisible(true);
+      setIsLaserPing(true);
+      setTimeout(() => setIsLaserPing(false), 700);
+
+      if (cursorTimerRef.current) clearTimeout(cursorTimerRef.current);
+      cursorTimerRef.current = setTimeout(() => {
+        setCursorVisible(false);
+      }, 3000);
+    } else if (payload.action === "cursor_active") {
+      setCursorVisible(Boolean(payload.visible));
+    } else if (payload.action === "next") {
+      nextSlide();
+    } else if (payload.action === "prev") {
+      prevSlide();
+    } else if (payload.action === "jump" && typeof payload.slide === "number") {
+      setCurrentSlide(payload.slide);
+    } else if (payload.action === "blackout") {
+      setIsBlackout((prev) => (typeof payload.state === "boolean" ? payload.state : !prev));
+    } else if (payload.action === "ping") {
+      setIsPhoneConnected(true);
+      syncToPhone(currentSlide, isBlackout);
+    }
+  }, [nextSlide, prevSlide, currentSlide, isBlackout, syncToPhone]);
+
+  // WebRTC PeerJS Host Listener (for 0ms instant cursor & click commands)
+  useEffect(() => {
+    if (!isOpen || !roomId || typeof window === "undefined") return;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let peer: any = null;
+
+    import("peerjs").then(({ default: Peer }) => {
+      try {
+        peer = new Peer(`rf-host-${roomId}`);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        peer.on("connection", (conn: any) => {
+          setIsPhoneConnected(true);
+          syncToPhone(currentSlide, isBlackout);
+
+          conn.on("data", (raw: unknown) => {
+            try {
+              const data = typeof raw === "string" ? JSON.parse(raw) : raw;
+              if (data && typeof data === "object") {
+                handleRemoteAction(data as Record<string, unknown>);
+              }
+            } catch {
+              // Ignore
+            }
+          });
+        });
+
+        peer.on("error", () => {
+          // Fallback to ntfy will handle it
+        });
+      } catch (e) {
+        console.warn("PeerJS host init skipped:", e);
+      }
+    });
+
+    return () => {
+      if (peer) peer.destroy();
+    };
+  }, [isOpen, roomId, handleRemoteAction, currentSlide, isBlackout, syncToPhone]);
+
+  // SSE subscription to receive commands from mobile phone (HTTP pubsub fallback)
   useEffect(() => {
     if (!isOpen || !roomId) return;
 
@@ -114,18 +203,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
         const data = JSON.parse(event.data);
         if (data && data.message) {
           const payload = typeof data.message === "string" ? JSON.parse(data.message) : data.message;
-          if (payload.action === "next") {
-            nextSlide();
-          } else if (payload.action === "prev") {
-            prevSlide();
-          } else if (payload.action === "jump" && typeof payload.slide === "number") {
-            setCurrentSlide(payload.slide);
-          } else if (payload.action === "blackout") {
-            setIsBlackout((prev) => (typeof payload.state === "boolean" ? payload.state : !prev));
-          } else if (payload.action === "ping") {
-            setIsPhoneConnected(true);
-            syncToPhone(currentSlide, isBlackout);
-          }
+          handleRemoteAction(payload);
         }
       } catch {
         // Ignore non-json pings
@@ -135,7 +213,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
     return () => {
       eventSource.close();
     };
-  }, [isOpen, roomId, nextSlide, prevSlide, currentSlide, isBlackout, syncToPhone]);
+  }, [isOpen, roomId, handleRemoteAction]);
 
   // Keyboard navigation listener (Arrow keys, Space, PageUp/Down, Esc, M for remote, B for blackout)
   useEffect(() => {
@@ -855,6 +933,44 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           投屏模式：已优化投影仪与大屏高对比度
         </div>
       </div>
+
+      {/* ============================================================== */}
+      {/* VIRTUAL MOUSEPAD LASER POINTER / CURSOR ARROW (CONTROLLED BY PHONE) */}
+      {/* ============================================================== */}
+      {cursorVisible && (
+        <div
+          className="fixed pointer-events-none z-[130] transition-all duration-75 ease-out select-none"
+          style={{
+            left: `${cursorPos.x}%`,
+            top: `${cursorPos.y}%`,
+            transform: "translate(-15%, -15%)",
+          }}
+        >
+          {/* Pulsating Ping Wave Ring when user taps mousepad */}
+          {isLaserPing && (
+            <div className="absolute -inset-8 rounded-full border-2 border-neon-green bg-neon-green/30 animate-ping pointer-events-none" />
+          )}
+
+          {/* Glowing Cursor Arrow SVG */}
+          <div className="relative flex items-start">
+            <svg 
+              className="w-8 h-8 drop-shadow-[0_0_12px_#00E599] text-neon-green"
+              viewBox="0 0 24 24" 
+              fill="currentColor"
+            >
+              <path d="M4 2L20 10L12 13L9 21L4 2Z" stroke="#FFFFFF" strokeWidth="1.5" strokeLinejoin="round" />
+            </svg>
+
+            {/* Glowing Laser Dot Core */}
+            <div className="absolute top-0 left-0 w-3 h-3 rounded-full bg-white shadow-[0_0_15px_#00E599] -translate-x-1 -translate-y-1 animate-pulse" />
+
+            {/* Pointer Floating Label */}
+            <div className="ml-3 px-2 py-0.5 rounded-full bg-charcoal-950/90 border border-neon-green/50 text-[10px] font-mono font-bold text-neon-green shadow-xl whitespace-nowrap">
+              RONNIE
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Phone Remote Control Pairing Modal */}
       <RemoteControlModal
