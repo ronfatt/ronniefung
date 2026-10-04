@@ -51,14 +51,14 @@ export const BigStatement: React.FC = () => {
           <div className="lg:col-span-3 flex justify-center lg:justify-end">
             <div className="w-48 h-48 sm:w-52 sm:h-52 rounded-full border border-bronze-400/40 p-3 flex items-center justify-center relative shadow-gold-glow bg-charcoal-950/60 backdrop-blur-md">
               <div className="w-full h-full rounded-full border-2 border-dashed border-bronze-300/60 flex flex-col items-center justify-center text-center p-4 space-y-1">
-                <span className="text-[10px] font-mono tracking-widest text-bronze-400 uppercase">MISSION</span>
-                <p className="font-serif text-xs sm:text-sm font-black text-ivory-50 leading-tight">
+                <span className="text-xs font-mono tracking-widest text-bronze-400 uppercase">MISSION</span>
+                <p className="font-serif text-sm sm:text-base font-black text-ivory-50 leading-tight">
                   不同的时代
                   <br />
                   同一个使命
                 </p>
-                <p className="text-[11px] font-serif text-neon-green font-bold">让更多人受益</p>
-                <span className="text-[9px] font-mono tracking-[0.2em] text-charcoal-500 uppercase pt-1">
+                <p className="text-xs sm:text-sm font-serif text-neon-green font-bold">让更多人受益</p>
+                <span className="text-[11px] font-mono tracking-[0.2em] text-charcoal-400 uppercase pt-1">
                   A BRIGHTER TOMORROW
                 </span>
               </div>

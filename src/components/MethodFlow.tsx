@@ -46,13 +46,13 @@ export const MethodFlow: React.FC = () => {
                   key={step.step}
                   className="p-3.5 sm:p-4 rounded-2xl bg-[#FAF7F2] border border-[#DDD6C7] flex flex-col items-center justify-center text-center shadow-2xs hover:border-jade-600 transition-colors"
                 >
-                  <span className="text-[10px] font-mono text-bronze-700 font-bold mb-1">
+                  <span className="text-xs font-mono text-bronze-700 font-bold mb-1">
                     0{idx + 1}
                   </span>
-                  <h4 className="font-serif text-xs sm:text-sm font-black text-charcoal-950 mb-0.5">
+                  <h4 className="font-serif text-sm sm:text-base font-black text-charcoal-950 mb-0.5">
                     {step.name}
                   </h4>
-                  <p className="text-[10px] text-charcoal-500 font-mono">
+                  <p className="text-xs text-charcoal-500 font-mono">
                     {step.sub}
                   </p>
                 </div>
@@ -60,7 +60,7 @@ export const MethodFlow: React.FC = () => {
             </div>
 
             {/* Bottom Motto Tagline */}
-            <div className="mt-4 pt-4 border-t border-[#E8E2D5] flex items-center justify-between text-[11px] font-mono font-bold text-charcoal-500 uppercase tracking-widest">
+            <div className="mt-4 pt-4 border-t border-[#E8E2D5] flex items-center justify-between text-xs font-mono font-bold text-charcoal-500 uppercase tracking-widest">
               <span>TRADITION → SYSTEM → AI</span>
               <span className="text-bronze-800">TECHNOLOGY SERVES WISDOM NOT REPLACES IT</span>
             </div>

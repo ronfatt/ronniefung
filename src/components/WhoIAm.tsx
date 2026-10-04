@@ -117,10 +117,10 @@ export const WhoIAm: React.FC = () => {
                 >
                   <div className="mb-2">{c.icon}</div>
                   <div>
-                    <h3 className="font-serif text-sm sm:text-base font-black text-ivory-50 mb-0.5">
+                    <h3 className="font-serif text-base sm:text-lg font-black text-ivory-50 mb-0.5">
                       {c.title}
                     </h3>
-                    <p className="text-[10px] sm:text-[11px] text-charcoal-400 leading-tight">
+                    <p className="text-xs sm:text-sm text-charcoal-400 leading-snug">
                       {c.subtitle}
                     </p>
                   </div>
@@ -137,10 +137,10 @@ export const WhoIAm: React.FC = () => {
                 >
                   <div className="mb-2">{c.icon}</div>
                   <div>
-                    <h3 className="font-serif text-sm sm:text-base font-black text-ivory-50 mb-0.5">
+                    <h3 className="font-serif text-base sm:text-lg font-black text-ivory-50 mb-0.5">
                       {c.title}
                     </h3>
-                    <p className="text-[10px] sm:text-[11px] text-charcoal-400 leading-tight">
+                    <p className="text-xs sm:text-sm text-charcoal-400 leading-snug">
                       {c.subtitle}
                     </p>
                   </div>

@@ -273,7 +273,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
                     <span className="text-base sm:text-lg font-serif font-black block">
                       {t.name}
                     </span>
-                    <span className="text-[10px] font-mono opacity-80 block truncate">
+                    <span className="text-xs font-mono opacity-80 block truncate">
                       {t.tagline.split("·")[0]}
                     </span>
                   </button>
@@ -378,7 +378,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
                     <span className="font-mono text-xs font-bold text-neon-green block mb-1">{item.year}</span>
                     <h3 className="font-serif text-sm font-black text-ivory-50 mb-1 leading-snug">{item.title}</h3>
                   </div>
-                  <p className="text-[10px] text-charcoal-400 leading-normal">{item.summary}</p>
+                  <p className="text-xs text-charcoal-300 leading-normal">{item.summary}</p>
                 </div>
               ))}
             </div>
@@ -413,13 +413,13 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
                   <div>
                     <div className="flex items-center justify-between text-xs mb-2">
                       <span className="font-mono text-bronze-400 font-bold">#{p.number}</span>
-                      <span className="text-neon-green font-bold text-[10px] flex items-center gap-1">
+                      <span className="text-neon-green font-bold text-xs flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-neon-green animate-pulse" />
                         LIVE ONLINE
                       </span>
                     </div>
                     <h3 className="font-serif text-lg font-black text-ivory-50 mb-1">{p.name}</h3>
-                    <p className="text-xs text-charcoal-400 leading-relaxed line-clamp-2">{p.oneLiner}</p>
+                    <p className="text-xs sm:text-sm text-charcoal-400 leading-relaxed line-clamp-2">{p.oneLiner}</p>
                   </div>
 
                   <a
@@ -465,7 +465,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
                     <p className="text-[11px] text-charcoal-400 leading-snug">{dim.tagline}</p>
                   </div>
 
-                  <div className="space-y-1.5 pt-2 border-t border-white/10 text-[10px]">
+                  <div className="space-y-1.5 pt-2 border-t border-white/10 text-xs">
                     <p className="text-red-400">✕ 通用AI: {dim.genericAI.points[0]}</p>
                     <p className="text-neon-green font-medium">✓ 专属系统: {dim.customPlatform.points[0]}</p>
                   </div>
@@ -476,12 +476,12 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
             {/* Quote Contrast Box */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
-                <span className="text-[10px] font-mono text-charcoal-400 font-bold block">通用 ChatGPT：</span>
+                <span className="text-xs font-mono text-charcoal-400 font-bold block">通用 ChatGPT：</span>
                 <p className="text-xs sm:text-sm text-charcoal-300 italic">“八字一般可以这样理解：五行缺水，运势可能会有变动……”</p>
               </div>
 
               <div className="p-4 rounded-2xl bg-neon-green/10 border border-neon-green/40 space-y-1">
-                <span className="text-[10px] font-mono text-neon-green font-bold block">老师专属系统：</span>
+                <span className="text-xs font-mono text-neon-green font-bold block">老师专属系统：</span>
                 <p className="text-xs sm:text-sm text-ivory-100 font-bold italic">“根据老师独家理论与历史排盘，你当下最核心需要突破的是这 3 个战略卡点……”</p>
               </div>
             </div>
@@ -525,7 +525,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
                         <span className="font-mono text-xs font-black text-neon-green bg-neon-green/10 border border-neon-green/30 px-2 py-0.5 rounded-full">
                           LAYER {layer.step}
                         </span>
-                        <span className="text-[10px] font-mono text-charcoal-400">
+                        <span className="text-xs font-mono text-charcoal-400">
                           {layer.badge}
                         </span>
                       </div>
@@ -539,13 +539,13 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
                         </h3>
                       </div>
 
-                      <p className="text-xs text-charcoal-300 leading-snug">
+                      <p className="text-xs sm:text-sm text-charcoal-300 leading-snug">
                         {layer.subtitle}
                       </p>
                     </div>
 
                     <div className="pt-2 border-t border-white/10 space-y-1">
-                      <span className="text-[10px] font-mono text-bronze-300 block uppercase truncate">
+                      <span className="text-xs font-mono text-bronze-300 block uppercase truncate">
                         交付：{layer.deliverable}
                       </span>
                     </div>
@@ -581,9 +581,9 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
             <div className="grid grid-cols-3 sm:grid-cols-9 gap-2">
               {methodSteps.map((step, idx) => (
                 <div key={step.step} className="p-3.5 rounded-2xl bg-charcoal-900 border border-white/10 flex flex-col items-center justify-center text-center space-y-1">
-                  <span className="text-[10px] font-mono text-neon-green font-bold">0{idx + 1}</span>
-                  <h3 className="font-serif text-xs sm:text-sm font-black text-ivory-50">{step.name}</h3>
-                  <p className="text-[9px] text-charcoal-400 font-mono truncate w-full">{step.sub}</p>
+                  <span className="text-xs font-mono text-neon-green font-bold">0{idx + 1}</span>
+                  <h3 className="font-serif text-sm sm:text-base font-black text-ivory-50">{step.name}</h3>
+                  <p className="text-xs text-charcoal-400 font-mono truncate w-full">{step.sub}</p>
                 </div>
               ))}
             </div>

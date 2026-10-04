@@ -91,7 +91,7 @@ export const ClosingCTA: React.FC<ClosingCTAProps> = ({ onOpenContact }) => {
               <div className="w-10 h-10 rounded-xl bg-charcoal-950 flex items-center justify-center shrink-0 border border-white/10">
                 <QrCode className="w-6 h-6 text-neon-green" />
               </div>
-              <div className="text-[11px] font-mono leading-tight">
+              <div className="text-xs sm:text-sm font-mono leading-tight">
                 <span className="block text-charcoal-300 font-bold">微信 WeChat</span>
                 <span className="text-neon-green font-bold">
                   {copiedWechat ? "已复制 ✓" : siteConfig.contact.wechat}
@@ -100,9 +100,9 @@ export const ClosingCTA: React.FC<ClosingCTAProps> = ({ onOpenContact }) => {
             </button>
 
             {/* Subtle Slogan */}
-            <div className="text-right text-[11px] font-serif text-charcoal-500 font-bold space-y-0.5">
+            <div className="text-right text-xs sm:text-sm font-serif text-charcoal-400 font-bold space-y-0.5">
               <p>让更多智慧 照亮更多人</p>
-              <p className="font-mono text-[9px] uppercase tracking-widest text-charcoal-600">
+              <p className="font-mono text-[11px] uppercase tracking-widest text-charcoal-500">
                 A BRIGHTER TOMORROW
               </p>
             </div>
@@ -111,7 +111,7 @@ export const ClosingCTA: React.FC<ClosingCTAProps> = ({ onOpenContact }) => {
         </div>
 
         {/* Bottom copyright line */}
-        <div className="mt-14 pt-6 border-t border-white/10 text-center text-[11px] font-mono text-charcoal-500">
+        <div className="mt-14 pt-6 border-t border-white/10 text-center text-xs font-mono text-charcoal-400">
           © {new Date().getFullYear()} Ronnie Fung. All Rights Reserved. · 传统智慧 × 品牌 × AI
         </div>
       </div>

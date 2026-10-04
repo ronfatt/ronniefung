@@ -49,17 +49,17 @@ export const Timeline: React.FC = () => {
                   </div>
 
                   {/* Year / Period */}
-                  <span className="font-mono text-[11px] font-bold text-bronze-700 uppercase mb-1">
+                  <span className="font-mono text-xs font-bold text-bronze-700 uppercase mb-1">
                     {item.period}
                   </span>
 
                   {/* Title */}
-                  <h3 className="font-serif text-sm sm:text-base font-black text-charcoal-950 mb-1 leading-snug">
+                  <h3 className="font-serif text-base sm:text-lg font-black text-charcoal-950 mb-1 leading-snug">
                     {item.title}
                   </h3>
 
                   {/* Short summary */}
-                  <p className="text-[11px] sm:text-xs text-charcoal-600 leading-normal max-w-[130px] font-normal">
+                  <p className="text-xs sm:text-sm text-charcoal-600 leading-normal max-w-[145px] font-normal">
                     {item.summary}
                   </p>
                 </div>

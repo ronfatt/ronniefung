@@ -146,7 +146,7 @@ export const PlatformArchitecture: React.FC = () => {
                         <span className={`font-mono text-xs font-extrabold ${isActive ? "text-neon-green" : "text-bronze-400"}`}>
                           LAYER {layer.step}
                         </span>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-ivory-200">
+                        <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-white/10 text-ivory-200">
                           {layer.badge}
                         </span>
                       </div>
@@ -233,7 +233,7 @@ export const PlatformArchitecture: React.FC = () => {
                         {module.techTags.map((tag, tIdx) => (
                           <span 
                             key={tIdx}
-                            className="font-mono text-[10px] sm:text-xs px-2.5 py-0.5 rounded-md bg-white/5 text-neon-green border border-white/10"
+                            className="font-mono text-xs px-2.5 py-0.5 rounded-md bg-white/5 text-neon-green border border-white/10"
                           >
                             #{tag}
                           </span>
@@ -265,7 +265,7 @@ export const PlatformArchitecture: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="w-5 h-5 text-neon-green flex-shrink-0" />
                   <div>
-                    <span className="text-[10px] font-mono text-neon-green uppercase tracking-widest font-bold block">
+                    <span className="text-xs font-mono text-neon-green uppercase tracking-widest font-bold block">
                       DELIVERABLE · 本阶段交付物
                     </span>
                     <span className="font-serif text-sm sm:text-base font-black text-ivory-50">
@@ -327,8 +327,8 @@ export const PlatformArchitecture: React.FC = () => {
                   <div className="space-y-3 pt-3 border-t border-white/10">
                     <div className="space-y-1.5">
                       {layer.workModules.map((m, mIdx) => (
-                        <div key={mIdx} className="text-xs text-charcoal-400 flex items-center gap-1.5 truncate">
-                          <span className="text-neon-green text-[10px]">●</span>
+                        <div key={mIdx} className="text-xs sm:text-sm text-charcoal-300 flex items-center gap-1.5 truncate">
+                          <span className="text-neon-green text-xs">●</span>
                           <span className="truncate">{m.name}</span>
                         </div>
                       ))}

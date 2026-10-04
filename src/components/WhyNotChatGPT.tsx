@@ -104,7 +104,7 @@ export const WhyNotChatGPT: React.FC = () => {
                       <XCircle className="w-5 h-5" />
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-charcoal-400 font-bold block">
+                      <span className="text-xs font-mono uppercase tracking-widest text-charcoal-400 font-bold block">
                         GENERAL AI BOT
                       </span>
                       <h3 className="font-serif text-lg sm:text-xl font-black text-charcoal-900">
@@ -149,7 +149,7 @@ export const WhyNotChatGPT: React.FC = () => {
                       <CheckCircle2 className="w-5 h-5" />
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-neon-green font-bold block">
+                      <span className="text-xs font-mono uppercase tracking-widest text-neon-green font-bold block">
                         CUSTOM METAPHYSICS ENGINE
                       </span>
                       <h3 className="font-serif text-lg sm:text-xl font-black text-ivory-50">
