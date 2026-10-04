@@ -586,7 +586,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
               <div>
                 <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase block mb-1">
-                  11 LIVE PROTOTYPES & WEB APPS
+                  12 LIVE PROTOTYPES & WEB APPS
                 </span>
                 <h2 className="font-serif text-3xl sm:text-5xl font-black text-ivory-50 tracking-tight">
                   我不是只谈概念。我已经开始把它们做出来。

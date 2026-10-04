@@ -40,7 +40,7 @@ export const ProjectShowcase: React.FC = () => {
               我已经开始把它们做出来。
             </h2>
             <p className="text-sm sm:text-base text-charcoal-400 font-medium">
-              11 个玄学 · 心灵 · 命理相关 Web App / Prototype
+              12 个玄学 · 心灵 · 命理相关 Web App / Prototype
             </p>
           </div>
 

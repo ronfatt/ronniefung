@@ -296,11 +296,36 @@ export const projectsData: ProjectItem[] = [
       aiLogic: "Next.js 现代前端 + 全栈会员系统 + 自动化支付与预约履约",
     },
   },
+  {
+    id: "project-12",
+    number: "12",
+    name: "AI 塔罗数字能量探索系统",
+    englishName: "AI Tarot & Numerology Oracle Web App",
+    category: "塔罗数字能量",
+    categorySlug: "numerology",
+    oneLiner: "西方神秘学塔罗大阿卡纳与东方时空数理跨界融合，一键推演灵魂原型与当下能量指引。",
+    description: "将 78 张塔罗原型的深层潜意识象征，与个人生命数字密码深度绑定。用户输入问题或日期，系统通过数字共振自动定盘，由 AI 输出富具疗愈感与决策指引的深度解盘报告。",
+    tags: ["塔罗数理", "生命数字原型", "即时能量占问", "AI 交互解牌"],
+    demoUrl: "#", // Placeholder: waiting for user URL
+    isLive: true,
+    accentColor: "from-purple-800/30 to-indigo-900/30",
+    status: "Live Product",
+    mockData: {
+      inputLabel: "塔罗数字能量占问",
+      sampleInput: "占问：当下职业转型与合伙发展 · 抽取牌阵与数字共振",
+      outputHighlights: [
+        "数字共振基底：9 (隐士/完成与蜕变)，正值知识内省与向外输出的转换节点",
+        "塔罗映射：权杖王后 + 星币八，提示兼具热情领导力与专业技能打磨",
+        "行动建议：不宜单打独斗，宜以个人 IP 结合数字系统形成产品化服务",
+      ],
+      aiLogic: "韦特/透特塔罗象征图谱 + 毕达哥拉斯数字原型矩阵 + 启发式共情 AI 引擎",
+    },
+  },
 ];
 
 export const projectCategories = [
-  { id: "all", label: "全部 11 款作品" },
-  { id: "numerology", label: "数字能量 · 时空数理" },
+  { id: "all", label: "全部 12 款作品" },
+  { id: "numerology", label: "数字能量 · 时空数理 · 塔罗" },
   { id: "mingli", label: "AI 姓名 · 神谕 · 奇门" },
   { id: "fengshui", label: "风水决策 AI" },
   { id: "healing", label: "身心灵 · 八镜 · 元辰宫" },
