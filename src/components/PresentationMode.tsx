@@ -368,9 +368,9 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
       </div>
 
       {/* ============================================================== */}
-      {/* SLIDE CONTENTS CONTAINER */}
+      {/* SLIDE CONTENTS CONTAINER (Safe padding to prevent HUD overlap) */}
       {/* ============================================================== */}
-      <div className="relative w-full h-full flex items-center justify-center p-6 sm:p-12 md:p-16 overflow-y-auto">
+      <div className="relative w-full h-full flex items-center justify-center pt-24 pb-20 px-6 sm:pt-28 sm:pb-20 sm:px-12 md:pt-32 md:pb-24 md:px-16 overflow-y-auto">
         
         {/* SLIDE 0: HERO (我做的，不是算命。) */}
         {currentSlide === 0 && (
@@ -785,21 +785,21 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
 
         {/* SLIDE 8: MY PHILOSOPHY (未来真正有价值的，不是 AI 会不会算命。) */}
         {currentSlide === 8 && (
-          <div className="max-w-5xl w-full space-y-10 text-center animate-in fade-in zoom-in-95 duration-300">
+          <div className="max-w-5xl w-full space-y-6 sm:space-y-8 text-center animate-in fade-in zoom-in-95 duration-300">
             <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase">
               PHILOSOPHICAL VISION
             </span>
 
-            <div className="space-y-6">
-              <h2 className="font-serif text-3xl sm:text-6xl font-black text-charcoal-400 tracking-tight leading-tight">
+            <div className="space-y-4 sm:space-y-5">
+              <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-black text-charcoal-400 tracking-tight leading-tight">
                 未来真正有价值的，
                 <br />
                 不是 AI 会不会算命。
               </h2>
 
-              <div className="h-0.5 w-24 bg-neon-green mx-auto" />
+              <div className="h-0.5 w-20 bg-neon-green mx-auto" />
 
-              <p className="font-serif text-3xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-ivory-50 via-neon-green to-jade-200 tracking-tight leading-tight">
+              <p className="font-serif text-2xl sm:text-4xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-ivory-50 via-neon-green to-jade-200 tracking-tight leading-tight">
                 而是：
                 <br />
                 谁能把几十年的经验，
@@ -808,7 +808,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
               </p>
             </div>
 
-            <div className="max-w-xl mx-auto p-5 rounded-2xl bg-white/5 border border-white/10 space-y-1 text-sm sm:text-base">
+            <div className="max-w-xl mx-auto p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 space-y-1 text-xs sm:text-sm">
               <p className="font-bold text-ivory-100">老师不会被 AI 取代。</p>
               <p className="text-charcoal-400">但不会使用 AI 的知识，可能会慢慢消失。</p>
             </div>
@@ -855,47 +855,53 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
 
         {/* SLIDE 10: CLOSING (如果你有一套做了 10-30 年的方法...) */}
         {currentSlide === 10 && (
-          <div className="max-w-4xl w-full text-center space-y-8 animate-in fade-in zoom-in-95 duration-300">
-            <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase">
-              CALL TO ACTION
-            </span>
-
-            <div className="space-y-4 font-serif">
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-ivory-50 leading-tight">
-                如果你有一套
-                <br />
-                做了 10 年、20 年、30 年的方法，
-              </h2>
-              <p className="text-2xl sm:text-4xl font-bold text-charcoal-400">
-                不要只留在自己的脑里。
-              </p>
-              <p className="text-3xl sm:text-5xl md:text-6xl font-black text-neon-green">
-                我们可以把它变成下一代的系统。
-              </p>
+          <div className="max-w-5xl w-full text-center space-y-5 sm:space-y-6 animate-in fade-in zoom-in-95 duration-300">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-mono tracking-widest text-neon-green uppercase font-bold">
+              <span>CALL TO ACTION · 携手落地</span>
             </div>
 
-            <div className="pt-2">
-              <p className="font-serif text-3xl font-black italic text-bronze-300">
+            <div className="space-y-3 font-serif">
+              <h2 className="font-black text-ivory-50 tracking-tight leading-[1.25]">
+                <span className="block text-xl sm:text-3xl lg:text-4xl font-bold text-ivory-200">
+                  如果你有一套
+                </span>
+                <span className="block text-2xl sm:text-4xl lg:text-5xl font-black text-ivory-50 mt-1 sm:whitespace-nowrap">
+                  做了 10 年、20 年、30 年的方法，
+                </span>
+              </h2>
+
+              <p className="text-lg sm:text-2xl lg:text-3xl font-bold text-charcoal-400 tracking-wide py-0.5">
+                不要只留在自己的脑里。
+              </p>
+
+              <div className="text-2xl sm:text-4xl lg:text-5xl font-black text-neon-green leading-[1.25] tracking-tight pt-1">
+                <span className="inline-block sm:whitespace-nowrap">我们可以把它，</span>
+                <span className="inline-block sm:whitespace-nowrap">变成下一代的系统。</span>
+              </div>
+            </div>
+
+            <div className="pt-1">
+              <p className="font-serif text-2xl sm:text-3xl font-black italic text-bronze-300">
                 Ronnie Fung
               </p>
-              <p className="text-xs font-mono text-charcoal-400 uppercase tracking-widest pt-1">
+              <p className="text-xs sm:text-sm font-mono text-charcoal-400 uppercase tracking-widest pt-0.5">
                 Brand Strategist · Knowledge Architect · AI Product Planner
               </p>
             </div>
 
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <a
                 href={`https://wa.me/${siteConfig.contact.whatsapp.replace(/[^0-9]/g, "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm sm:text-base shadow-lg transition-transform active:scale-95"
+                className="px-6 py-3.5 sm:px-8 sm:py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm shadow-lg transition-transform active:scale-95"
               >
                 WhatsApp 与我联系 ({siteConfig.contact.whatsapp})
               </a>
 
               <button
                 onClick={onClose}
-                className="px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-ivory-50 font-bold text-sm sm:text-base border border-white/20 transition-colors"
+                className="px-6 py-3.5 sm:px-8 sm:py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-ivory-50 font-bold text-xs sm:text-sm border border-white/20 transition-colors"
               >
                 浏览完整网页长图
               </button>
