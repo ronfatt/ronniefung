@@ -9,6 +9,7 @@ import { Timeline } from "@/components/Timeline";
 import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { WhyNotChatGPT } from "@/components/WhyNotChatGPT";
 import { PlatformArchitecture } from "@/components/PlatformArchitecture";
+import { BMSProposal } from "@/components/BMSProposal";
 import { MethodFlow } from "@/components/MethodFlow";
 import { BigStatement } from "@/components/BigStatement";
 import { TargetPartners } from "@/components/TargetPartners";
@@ -79,7 +80,10 @@ export default function Home() {
       {/* SECTION 7: PLATFORM ARCHITECTURE (从零构想到平台上线，我为你做的完整工程体系) */}
       <PlatformArchitecture />
 
-      {/* SECTION 7: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT。) */}
+      {/* SECTION 8: BMS PLATFORM PROPOSAL (BMS · 身心灵导师聚合平台｜概念提案) */}
+      <BMSProposal onOpenContact={handleOpenContactWithTopic} />
+
+      {/* SECTION 9: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT。) */}
       <MethodFlow />
 
       {/* SECTION 7: MY PHILOSOPHY (未来真正有价值的，不是 AI 会不会算命。) */}

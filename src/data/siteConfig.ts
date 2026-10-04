@@ -24,6 +24,7 @@ export const siteConfig = {
     { label: "作品展示", href: "#projects" },
     { label: "为何非通用AI", href: "#why-not-chatgpt" },
     { label: "全周期架构", href: "#architecture" },
+    { label: "BMS提案", href: "#bms-proposal" },
     { label: "我的方法", href: "#method" },
     { label: "合作方式", href: "#collaboration" },
   ],

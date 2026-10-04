@@ -17,7 +17,10 @@ import {
   ShieldCheck,
   Smartphone,
   Moon,
-  QrCode
+  QrCode,
+  Compass,
+  Users,
+  GraduationCap
 } from "lucide-react";
 import { siteConfig } from "@/data/siteConfig";
 import { teacherTypes } from "@/data/teachers";
@@ -26,6 +29,7 @@ import { projectsData } from "@/data/projects";
 import { methodSteps } from "@/data/content";
 import { architectureBlueprint } from "@/data/architecture";
 import { whyNotChatGPTData } from "@/data/comparison";
+import { bmsProposalData } from "@/data/bmsProposal";
 import { RemoteControlModal } from "@/components/RemoteControlModal";
 
 interface PresentationModeProps {
@@ -54,7 +58,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
   const [isLaserPing, setIsLaserPing] = useState<boolean>(false);
   const cursorTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const totalSlides = 11;
+  const totalSlides = 12;
 
   // Initialize or retrieve room ID
   useEffect(() => {
@@ -749,8 +753,130 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 7: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT。) */}
+        {/* SLIDE 7: BMS · PLATFORM CONCEPT PROPOSAL (身心灵导师聚合平台｜概念提案) */}
         {currentSlide === 7 && (
+          <div className="max-w-6xl w-full space-y-6 animate-in fade-in zoom-in-95 duration-300">
+            {/* Header Block */}
+            <div className="text-center space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neon-green/10 border border-neon-green/30 text-neon-green text-xs font-mono font-bold tracking-widest uppercase">
+                <Compass className="w-3.5 h-3.5" />
+                <span>BMS · PLATFORM CONCEPT PROPOSAL</span>
+              </div>
+              <h2 className="font-serif text-3xl sm:text-5xl font-black text-ivory-50 tracking-tight leading-tight">
+                身心灵导师聚合平台｜概念提案
+              </h2>
+              <p className="font-serif text-xl sm:text-2xl font-bold text-neon-green tracking-tight">
+                将不同导师的专业，连接成一条完整的用户旅程。
+              </p>
+              <p className="text-xs sm:text-sm text-charcoal-300 max-w-3xl mx-auto">
+                从「不知道找谁」，到「清晰知道下一步怎么走」 · 汇聚 8-10 位不同流派导师的一站式数字生态
+              </p>
+            </div>
+
+            {/* 4 Core Pillars Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              {bmsProposalData.pillars.map((p) => (
+                <div
+                  key={p.id}
+                  className="p-4 sm:p-5 rounded-2xl bg-charcoal-900 border border-white/10 hover:border-neon-green transition-all flex flex-col justify-between space-y-3"
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs font-black text-neon-green bg-neon-green/10 px-2 py-0.5 rounded-full border border-neon-green/30">
+                        {p.id}
+                      </span>
+                      <span className="text-[11px] font-mono text-bronze-300 font-bold uppercase">
+                        {p.tag}
+                      </span>
+                    </div>
+
+                    <h3 className="font-serif text-base sm:text-lg font-black text-ivory-50 leading-snug">
+                      {p.title}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-charcoal-300 leading-relaxed font-sans">
+                      {p.desc}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 border-t border-white/10 text-[11px] font-mono text-neon-green/90 font-bold">
+                    ✓ {p.metric}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Tripartite System Architecture Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+              {bmsProposalData.roles.map((r, idx) => {
+                const icons = [Users, GraduationCap, ShieldCheck];
+                const RIcon = icons[idx] || Users;
+                return (
+                  <div
+                    key={r.role}
+                    className="p-4 rounded-2xl bg-charcoal-900/90 border border-white/10 flex flex-col justify-between space-y-2.5"
+                  >
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-[10px] text-charcoal-400 font-bold uppercase">
+                          {r.role}
+                        </span>
+                        <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/5 text-bronze-300 border border-white/10 font-mono">
+                          {r.badge}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <div className="p-1 rounded-lg bg-neon-green/10 text-neon-green">
+                          <RIcon className="w-4 h-4" />
+                        </div>
+                        <h4 className="font-serif text-sm sm:text-base font-black text-ivory-50">
+                          {r.title}
+                        </h4>
+                      </div>
+
+                      <ul className="space-y-1 pt-1">
+                        {r.items.slice(0, 3).map((item, i) => (
+                          <li key={i} className="text-xs text-charcoal-300 flex items-center gap-1.5 truncate">
+                            <span className="text-neon-green text-[10px]">✦</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="pt-1.5 border-t border-white/10 text-[11px] font-mono text-charcoal-400 text-center">
+                      实时闭环调度 · 沉淀数字资产
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Bottom Methodology & Phased Scope */}
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-charcoal-900 via-neon-green/10 to-charcoal-900 border border-neon-green/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+              <div className="space-y-0.5">
+                <span className="text-[11px] font-mono text-neon-green font-bold uppercase">
+                  RONNIE&apos;S ROLE · 规划角色
+                </span>
+                <p className="font-serif text-xs sm:text-sm font-bold text-ivory-100">
+                  品牌定位 → 用户旅程 → 知识结构化 → 互动体验 → 三端架构 → 上线运营
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 text-xs font-mono text-bronze-300">
+                <span className="px-2.5 py-1 rounded-xl bg-white/5 border border-white/10">Phase 1: 预约闭环</span>
+                <span className="text-white/30">→</span>
+                <span className="px-2.5 py-1 rounded-xl bg-white/5 border border-white/10">Phase 2: 体验扩展</span>
+                <span className="text-white/30">→</span>
+                <span className="px-2.5 py-1 rounded-xl bg-white/5 border border-white/10">Phase 3: 会员生态</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* SLIDE 8: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT。) */}
+        {currentSlide === 8 && (
           <div className="max-w-6xl w-full space-y-8 animate-in fade-in zoom-in-95 duration-300">
             <div className="text-center space-y-2">
               <span className="text-xs font-mono font-black text-bronze-400 tracking-[0.25em] uppercase">
@@ -783,8 +909,8 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 8: MY PHILOSOPHY (未来真正有价值的，不是 AI 会不会算命。) */}
-        {currentSlide === 8 && (
+        {/* SLIDE 9: MY PHILOSOPHY (未来真正有价值的，不是 AI 会不会算命。) */}
+        {currentSlide === 9 && (
           <div className="max-w-5xl w-full space-y-6 sm:space-y-8 text-center animate-in fade-in zoom-in-95 duration-300">
             <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase">
               PHILOSOPHICAL VISION
@@ -815,8 +941,8 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 9: LET'S WORK TOGETHER (我正在找这样的老师合作。) */}
-        {currentSlide === 9 && (
+        {/* SLIDE 10: LET'S WORK TOGETHER (我正在找这样的老师合作。) */}
+        {currentSlide === 10 && (
           <div className="max-w-5xl w-full space-y-8 animate-in fade-in zoom-in-95 duration-300">
             <div className="text-center space-y-2">
               <span className="text-xs font-mono font-black text-bronze-400 tracking-[0.25em] uppercase">
@@ -853,8 +979,8 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 10: CLOSING (如果你有一套做了 10-30 年的方法...) */}
-        {currentSlide === 10 && (
+        {/* SLIDE 11: CLOSING (如果你有一套做了 10-30 年的方法...) */}
+        {currentSlide === 11 && (
           <div className="max-w-5xl w-full text-center space-y-5 sm:space-y-6 animate-in fade-in zoom-in-95 duration-300">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-mono tracking-widest text-neon-green uppercase font-bold">
               <span>CALL TO ACTION · 携手落地</span>
