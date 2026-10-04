@@ -14,7 +14,10 @@ import {
   Cpu,
   Sparkles,
   TrendingUp,
-  ShieldCheck
+  ShieldCheck,
+  Smartphone,
+  Moon,
+  QrCode
 } from "lucide-react";
 import { siteConfig } from "@/data/siteConfig";
 import { teacherTypes } from "@/data/teachers";
@@ -23,6 +26,7 @@ import { projectsData } from "@/data/projects";
 import { methodSteps } from "@/data/content";
 import { architectureBlueprint } from "@/data/architecture";
 import { whyNotChatGPTData } from "@/data/comparison";
+import { RemoteControlModal } from "@/components/RemoteControlModal";
 
 interface PresentationModeProps {
   isOpen: boolean;
@@ -38,7 +42,25 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedTeacherId, setSelectedTeacherId] = useState("mingli");
 
+  // Realtime Phone Remote Controller states
+  const [roomId, setRoomId] = useState<string>("");
+  const [remoteModalOpen, setRemoteModalOpen] = useState(false);
+  const [isPhoneConnected, setIsPhoneConnected] = useState(false);
+  const [isBlackout, setIsBlackout] = useState(false);
+
   const totalSlides = 11;
+
+  // Initialize or retrieve room ID
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      let room = sessionStorage.getItem("rf_pres_room");
+      if (!room) {
+        room = "rf-" + Math.random().toString(36).substring(2, 8);
+        sessionStorage.setItem("rf_pres_room", room);
+      }
+      setRoomId(room);
+    }
+  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev < totalSlides - 1 ? prev + 1 : 0));
@@ -60,7 +82,62 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
     }
   };
 
-  // Keyboard navigation listener (Arrow keys, Space, PageUp/Down, Esc)
+  // Broadcast current slide to connected phone remote
+  const syncToPhone = useCallback((slideIndex: number, blackout = false) => {
+    if (!roomId) return;
+    fetch(`https://ntfy.sh/rf-pres-${roomId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "sync",
+        currentSlide: slideIndex,
+        isBlackout: blackout,
+      }),
+    }).catch(() => {});
+  }, [roomId]);
+
+  // Synchronize state to phone when slide or blackout changes
+  useEffect(() => {
+    if (isOpen && roomId) {
+      syncToPhone(currentSlide, isBlackout);
+    }
+  }, [isOpen, roomId, currentSlide, isBlackout, syncToPhone]);
+
+  // SSE subscription to receive commands from mobile phone clicker
+  useEffect(() => {
+    if (!isOpen || !roomId) return;
+
+    const eventSource = new EventSource(`https://ntfy.sh/rf-pres-${roomId}/sse`);
+
+    eventSource.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data && data.message) {
+          const payload = typeof data.message === "string" ? JSON.parse(data.message) : data.message;
+          if (payload.action === "next") {
+            nextSlide();
+          } else if (payload.action === "prev") {
+            prevSlide();
+          } else if (payload.action === "jump" && typeof payload.slide === "number") {
+            setCurrentSlide(payload.slide);
+          } else if (payload.action === "blackout") {
+            setIsBlackout((prev) => (typeof payload.state === "boolean" ? payload.state : !prev));
+          } else if (payload.action === "ping") {
+            setIsPhoneConnected(true);
+            syncToPhone(currentSlide, isBlackout);
+          }
+        }
+      } catch {
+        // Ignore non-json pings
+      }
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [isOpen, roomId, nextSlide, prevSlide, currentSlide, isBlackout, syncToPhone]);
+
+  // Keyboard navigation listener (Arrow keys, Space, PageUp/Down, Esc, M for remote, B for blackout)
   useEffect(() => {
     if (!isOpen) return;
 
@@ -72,15 +149,23 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
         e.preventDefault();
         prevSlide();
       } else if (e.key === "Escape") {
-        onClose();
+        if (remoteModalOpen) {
+          setRemoteModalOpen(false);
+        } else {
+          onClose();
+        }
       } else if (e.key.toLowerCase() === "f") {
         toggleFullscreen();
+      } else if (e.key.toLowerCase() === "m") {
+        setRemoteModalOpen((prev) => !prev);
+      } else if (e.key.toLowerCase() === "b") {
+        setIsBlackout((prev) => !prev);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, nextSlide, prevSlide, onClose]);
+  }, [isOpen, nextSlide, prevSlide, onClose, remoteModalOpen]);
 
   // Touch gesture swipe handling for mobile / iPad presentation
   useEffect(() => {
@@ -130,45 +215,69 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </span>
         </div>
 
-        {/* Presentation Slide Navigator & Controls */}
-        <div className="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-full bg-charcoal-900/90 border border-white/10 backdrop-blur-md shadow-md">
+        {/* Right HUD Controls: Remote Clicker Button + Navigator Pill */}
+        <div className="pointer-events-auto flex items-center gap-2.5">
+          {/* Phone Remote Control Launcher Button */}
           <button
-            onClick={prevSlide}
-            className="p-1.5 rounded-full hover:bg-white/10 text-ivory-50 transition-colors"
-            title="上一张 (←)"
+            onClick={() => setRemoteModalOpen(true)}
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full border backdrop-blur-md shadow-md transition-all ${
+              isPhoneConnected 
+                ? "bg-neon-green/20 border-neon-green text-neon-green font-bold shadow-neon-glow" 
+                : "bg-charcoal-900/90 border-white/20 text-ivory-50 hover:bg-white/10"
+            }`}
+            title="手机扫码遥控翻页 (M)"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <Smartphone className="w-4 h-4 text-neon-green" />
+            <span className="text-xs font-mono font-bold hidden sm:inline">
+              {isPhoneConnected ? "手机遥控已连接" : "手机扫码遥控"}
+            </span>
+            {isPhoneConnected ? (
+              <span className="w-2 h-2 rounded-full bg-neon-green animate-pulse" />
+            ) : (
+              <QrCode className="w-3.5 h-3.5 text-bronze-300" />
+            )}
           </button>
 
-          <span className="font-mono text-xs sm:text-sm font-bold text-bronze-300 px-2 min-w-[3.5rem] text-center">
-            {currentSlide + 1} / {totalSlides}
-          </span>
+          {/* Presentation Slide Navigator & Controls */}
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-charcoal-900/90 border border-white/10 backdrop-blur-md shadow-md">
+            <button
+              onClick={prevSlide}
+              className="p-1.5 rounded-full hover:bg-white/10 text-ivory-50 transition-colors"
+              title="上一张 (←)"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
 
-          <button
-            onClick={nextSlide}
-            className="p-1.5 rounded-full hover:bg-white/10 text-ivory-50 transition-colors"
-            title="下一张 (→)"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+            <span className="font-mono text-xs sm:text-sm font-bold text-bronze-300 px-2 min-w-[3.5rem] text-center">
+              {currentSlide + 1} / {totalSlides}
+            </span>
 
-          <div className="w-px h-4 bg-white/20 mx-1" />
+            <button
+              onClick={nextSlide}
+              className="p-1.5 rounded-full hover:bg-white/10 text-ivory-50 transition-colors"
+              title="下一张 (→)"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
 
-          <button
-            onClick={toggleFullscreen}
-            className="p-1.5 rounded-full hover:bg-white/10 text-ivory-50 transition-colors hidden sm:inline-flex"
-            title="全屏切换 (F)"
-          >
-            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-          </button>
+            <div className="w-px h-4 bg-white/20 mx-1" />
 
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-colors"
-            title="退出演讲模式 (Esc)"
-          >
-            <X className="w-4 h-4" />
-          </button>
+            <button
+              onClick={toggleFullscreen}
+              className="p-1.5 rounded-full hover:bg-white/10 text-ivory-50 transition-colors hidden sm:inline-flex"
+              title="全屏切换 (F)"
+            >
+              {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            </button>
+
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-colors"
+              title="退出演讲模式 (Esc)"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -718,18 +827,42 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
 
       </div>
 
+      {/* Blackout Pause Screen Overlay (Activated by 'B' key or phone remote) */}
+      {isBlackout && (
+        <div 
+          onClick={() => setIsBlackout(false)}
+          className="absolute inset-0 z-[110] bg-black flex flex-col items-center justify-center cursor-pointer animate-in fade-in duration-200 select-none"
+        >
+          <div className="text-center space-y-3 opacity-60 hover:opacity-100 transition-opacity">
+            <Moon className="w-10 h-10 mx-auto text-neon-green animate-pulse" />
+            <p className="font-serif text-lg font-bold text-ivory-100">演讲暂停中 · 黑屏休息</p>
+            <p className="font-mono text-xs text-charcoal-400">点击屏幕或在手机遥控器上点击“解除黑屏”继续</p>
+          </div>
+        </div>
+      )}
+
       {/* Bottom Keyboard Hint Bar */}
-      <div className="p-4 sm:p-5 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-charcoal-400 bg-charcoal-950/80 backdrop-blur-md">
+      <div className="p-4 sm:p-5 border-t border-white/10 flex items-center justify-between text-xs font-mono text-charcoal-400 bg-charcoal-950/80 backdrop-blur-md">
         <div className="hidden sm:flex items-center gap-4">
           <span>快捷键：[← 上一张] [→ 下一张 / 空格] [F 全屏] [Esc 退出]</span>
+          <span className="text-neon-green font-bold">[M 手机遥控]</span>
+          <span className="text-amber-300 font-bold">[B 暂停黑屏]</span>
         </div>
         <div className="sm:hidden text-center w-full">
-          <span>左右滑动屏幕即可切换幻灯片</span>
+          <span>左右滑动屏幕或点击上方【手机扫码遥控】</span>
         </div>
         <div className="hidden sm:block text-neon-green font-bold">
           投屏模式：已优化投影仪与大屏高对比度
         </div>
       </div>
+
+      {/* Phone Remote Control Pairing Modal */}
+      <RemoteControlModal
+        isOpen={remoteModalOpen}
+        onClose={() => setRemoteModalOpen(false)}
+        roomId={roomId}
+        isConnected={isPhoneConnected}
+      />
 
     </div>
   );
