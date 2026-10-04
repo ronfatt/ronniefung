@@ -22,6 +22,7 @@ export const siteConfig = {
     { label: "关于我", href: "#about" },
     { label: "人生轨迹", href: "#timeline" },
     { label: "作品展示", href: "#projects" },
+    { label: "为何非通用AI", href: "#why-not-chatgpt" },
     { label: "全周期架构", href: "#architecture" },
     { label: "我的方法", href: "#method" },
     { label: "合作方式", href: "#collaboration" },

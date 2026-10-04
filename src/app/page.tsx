@@ -7,6 +7,7 @@ import { TeacherSelector } from "@/components/TeacherSelector";
 import { WhoIAm } from "@/components/WhoIAm";
 import { Timeline } from "@/components/Timeline";
 import { ProjectShowcase } from "@/components/ProjectShowcase";
+import { WhyNotChatGPT } from "@/components/WhyNotChatGPT";
 import { PlatformArchitecture } from "@/components/PlatformArchitecture";
 import { MethodFlow } from "@/components/MethodFlow";
 import { BigStatement } from "@/components/BigStatement";
@@ -72,7 +73,10 @@ export default function Home() {
       {/* SECTION 5: PROJECTS (我不是只谈概念。我已经开始把它们做出来。) */}
       <ProjectShowcase />
 
-      {/* SECTION 6: PLATFORM ARCHITECTURE (从零构想到平台上线，我为你做的完整工程体系) */}
+      {/* SECTION 6: WHY NOT CHATGPT (为什么不是直接用 ChatGPT？) */}
+      <WhyNotChatGPT />
+
+      {/* SECTION 7: PLATFORM ARCHITECTURE (从零构想到平台上线，我为你做的完整工程体系) */}
       <PlatformArchitecture />
 
       {/* SECTION 7: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT。) */}

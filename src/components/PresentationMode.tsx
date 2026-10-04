@@ -22,6 +22,7 @@ import { timelineData } from "@/data/timeline";
 import { projectsData } from "@/data/projects";
 import { methodSteps } from "@/data/content";
 import { architectureBlueprint } from "@/data/architecture";
+import { whyNotChatGPTData } from "@/data/comparison";
 
 interface PresentationModeProps {
   isOpen: boolean;
@@ -37,7 +38,7 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedTeacherId, setSelectedTeacherId] = useState("mingli");
 
-  const totalSlides = 10;
+  const totalSlides = 11;
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev < totalSlides - 1 ? prev + 1 : 0));
@@ -436,8 +437,66 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 5: FULL-LIFECYCLE PLATFORM ARCHITECTURE */}
+        {/* SLIDE 5: WHY NOT CHATGPT (为什么不是直接用 ChatGPT？) */}
         {currentSlide === 5 && (
+          <div className="max-w-6xl w-full space-y-6 animate-in fade-in zoom-in-95 duration-300">
+            <div className="text-center space-y-2">
+              <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase">
+                THE CORE DISTINCTION · 核心差异
+              </span>
+              <h2 className="font-serif text-3xl sm:text-5xl font-black text-ivory-50 tracking-tight">
+                为什么不是直接用 ChatGPT？
+              </h2>
+              <p className="text-xs sm:text-sm text-charcoal-400 max-w-2xl mx-auto">
+                通用型 AI（什么都懂一点） vs 老师专属知识系统（为专属理论与闭环变现而生）
+              </p>
+            </div>
+
+            {/* 5 Dimensions Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
+              {whyNotChatGPTData.dimensions.map((dim) => (
+                <div 
+                  key={dim.id}
+                  className="p-4 rounded-2xl bg-charcoal-900 border border-white/10 flex flex-col justify-between space-y-3 hover:border-neon-green transition-all"
+                >
+                  <div className="space-y-1.5">
+                    <span className="font-mono text-xs font-bold text-neon-green">#{dim.number}</span>
+                    <h3 className="font-serif text-sm sm:text-base font-black text-ivory-50">{dim.title}</h3>
+                    <p className="text-[11px] text-charcoal-400 leading-snug">{dim.tagline}</p>
+                  </div>
+
+                  <div className="space-y-1.5 pt-2 border-t border-white/10 text-[10px]">
+                    <p className="text-red-400">✕ 通用AI: {dim.genericAI.points[0]}</p>
+                    <p className="text-neon-green font-medium">✓ 专属系统: {dim.customPlatform.points[0]}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Quote Contrast Box */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+                <span className="text-[10px] font-mono text-charcoal-400 font-bold block">通用 ChatGPT：</span>
+                <p className="text-xs sm:text-sm text-charcoal-300 italic">“八字一般可以这样理解：五行缺水，运势可能会有变动……”</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-neon-green/10 border border-neon-green/40 space-y-1">
+                <span className="text-[10px] font-mono text-neon-green font-bold block">老师专属系统：</span>
+                <p className="text-xs sm:text-sm text-ivory-100 font-bold italic">“根据老师独家理论与历史排盘，你当下最核心需要突破的是这 3 个战略卡点……”</p>
+              </div>
+            </div>
+
+            {/* Bottom Summary Takeaway */}
+            <div className="p-3.5 rounded-2xl bg-charcoal-900 border border-white/10 text-center">
+              <p className="font-serif text-xs sm:text-sm font-black text-bronze-300">
+                “ChatGPT 是聪明的通用助手。我为你做的是可以真正经营、累积、进化并商业化的专属资产系统。”
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* SLIDE 6: FULL-LIFECYCLE PLATFORM ARCHITECTURE */}
+        {currentSlide === 6 && (
           <div className="max-w-6xl w-full space-y-6 animate-in fade-in zoom-in-95 duration-300">
             <div className="text-center space-y-2">
               <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase">
@@ -503,8 +562,8 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 6: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT。) */}
-        {currentSlide === 6 && (
+        {/* SLIDE 7: MY METHOD (传统知识进入 AI，不是把资料丢进 ChatGPT。) */}
+        {currentSlide === 7 && (
           <div className="max-w-6xl w-full space-y-8 animate-in fade-in zoom-in-95 duration-300">
             <div className="text-center space-y-2">
               <span className="text-xs font-mono font-black text-bronze-400 tracking-[0.25em] uppercase">
@@ -537,8 +596,8 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 7: MY PHILOSOPHY (未来真正有价值的，不是 AI 会不会算命。) */}
-        {currentSlide === 7 && (
+        {/* SLIDE 8: MY PHILOSOPHY (未来真正有价值的，不是 AI 会不会算命。) */}
+        {currentSlide === 8 && (
           <div className="max-w-5xl w-full space-y-10 text-center animate-in fade-in zoom-in-95 duration-300">
             <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase">
               PHILOSOPHICAL VISION
@@ -569,8 +628,8 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 8: LET'S WORK TOGETHER (我正在找这样的老师合作。) */}
-        {currentSlide === 8 && (
+        {/* SLIDE 9: LET'S WORK TOGETHER (我正在找这样的老师合作。) */}
+        {currentSlide === 9 && (
           <div className="max-w-5xl w-full space-y-8 animate-in fade-in zoom-in-95 duration-300">
             <div className="text-center space-y-2">
               <span className="text-xs font-mono font-black text-bronze-400 tracking-[0.25em] uppercase">
@@ -607,8 +666,8 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
           </div>
         )}
 
-        {/* SLIDE 9: CLOSING (如果你有一套做了 10-30 年的方法...) */}
-        {currentSlide === 9 && (
+        {/* SLIDE 10: CLOSING (如果你有一套做了 10-30 年的方法...) */}
+        {currentSlide === 10 && (
           <div className="max-w-4xl w-full text-center space-y-8 animate-in fade-in zoom-in-95 duration-300">
             <span className="text-xs font-mono font-black text-neon-green tracking-[0.25em] uppercase">
               CALL TO ACTION
