@@ -231,7 +231,7 @@ export const projectsData: ProjectItem[] = [
     oneLiner: "把九宫八神、九星八门的复杂时空盘，转化为商业谈判与竞争决策的清晰行动指南。",
     description: "奇门起盘极其繁琐，初学者难以看懂。该系统根据起局时间自动定局排盘，并将复杂的吉凶格局转译为直接的商业攻守策略。",
     tags: ["时家奇门", "局象自动计算", "商业谈判策略", "趋吉避凶建议"],
-    demoUrl: "https://lucky7-beryl.vercel.app/",
+    demoUrl: "https://qimen-pi.vercel.app/",
     isLive: true,
     accentColor: "from-stone-700/30 to-amber-900/30",
     status: "Interactive Demo",
